@@ -1,14 +1,11 @@
-// import { constants } from "buffer";
-// const { program } = require("commander");
-const program = require("./node_modules/commander");
-
+const { Command } = require("commander");
+const program = new Command();
 const {
   listContacts,
   getContactById,
   removeContact,
   addContact,
 } = require("./contacts");
-// import { program } from "commander";
 program
   .option("-a, --action <type>", "choose action")
   .option("-i, --id <type>", "user id")
@@ -20,23 +17,19 @@ program.parse();
 
 const options = program.opts();
 
-// TODO: рефакторити
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      // ...
       const contacts = await listContacts();
       return console.table(contacts);
       break;
 
     case "get":
-      // ... id
       const contactId = await getContactById(id);
       return console.log(contactId);
       break;
 
     case "add":
-      // ... name email phone
       const addedContact = await addContact(name, email, phone);
 
       return console.log(addedContact);
@@ -44,7 +37,6 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case "remove":
-      // ... id
       const deletedContact = await removeContact(id);
       return console.log(deletedContact);
       break;
